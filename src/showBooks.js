@@ -2,11 +2,9 @@ import React from 'react'
 
 const ShowBooks = (props) => {
 
-  const {books, shelfTitle, moveBook} = props
+  const {books, moveBook} = props
 
   return (
-    <div className="bookshelf">
-      <h2 className="bookshelf-title">{shelfTitle}</h2>
       <div className="bookshelf-books">
           <ol className="books-grid">
             {
@@ -14,9 +12,9 @@ const ShowBooks = (props) => {
                 <li key={book.id}>
                   <div className="book">
                     <div className="book-top">
-                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")`}}></div>
+                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${'imageLinks' in book ? book.imageLinks.thumbnail : 'nopreview.png'}")`}}></div>
                       <div className="book-shelf-changer">
-                        <select defaultValue={book.shelf} onChange={(event) => moveBook(event, book)}>
+                        <select defaultValue={'shelf' in book ? book.shelf : 'none'} onChange={(event) => moveBook(event, book)}>
                           <option value="move" disabled>Move to...</option>
                           <option value="currentlyReading">Currently Reading</option>
                           <option value="wantToRead">Want to Read</option>
@@ -26,18 +24,13 @@ const ShowBooks = (props) => {
                       </div>
                     </div>
                     <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.authors.join(', ')}</div>
+                    <div className="book-authors">{'authors' in book && book.authors.join(', ')}</div>
                   </div>
                 </li>
               ))
             }
           </ol>
       </div>
-
-
-    </div>
-
-
   )
 
 }

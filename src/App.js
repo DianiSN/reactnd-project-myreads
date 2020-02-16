@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import ShowBooks from './showBooks.js'
+import React, {useState, useEffect} from 'react'
+import { Route, Link } from 'react-router-dom'
+import Shelfs from './Shelfs.js'
+import Search from './Search'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
+
 const BooksApp = () => {
+
   const [currentlyReading, setCurrentlyReading] = useState([])
   const [wantToRead, setWantToRead] = useState([])
   const [read, setRead] = useState([])
+  const [booksOnShelf, setBooksOnShelf] = useState([])
 
   useEffect(() => {
     // Update the document title using the browser API
     BooksAPI.getAll().then((books) => {
+      setBooksOnShelf(books)
       setCurrentlyReading(
         filterToShelf(books, 'currentlyReading')
       )
@@ -67,17 +73,27 @@ const BooksApp = () => {
        //remove from old shelf
        tidyShelf(oldShelf, shelfs[oldShelf])
     })
-
   }
 
 
   return (
     <div className="app">
-      <ShowBooks books={currentlyReading} shelfTitle="Currently Reading" moveBook={moveBook}/>
-      <ShowBooks books={wantToRead} shelfTitle="Want to Read" moveBook={moveBook}/>
-      <ShowBooks books={read} shelfTitle="Read" moveBook={moveBook}/>
+      <Route exact path="/" render={() => (
+        <div className="list-books">
+          <Shelfs currentlyReading={currentlyReading} wantToRead={wantToRead} read={read} moveBook={moveBook} />
+          <div className="open-search">
+            <Link
+            to="/search">
+            <button>Add a book</button>
+            </Link>
+          </div>
+        </div>
+      )}/>
+    <Route exact path="/search" render={({ history }) => (<Search booksOnShelf={booksOnShelf} moveBook={(event, book) => {
+      moveBook(event, book)
+      history.push('/')
+    }}/>)}/>
     </div>
-
   )
 }
 
