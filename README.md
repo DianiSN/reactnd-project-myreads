@@ -94,7 +94,7 @@ To install and lunch the project:
 -   Clone or download this repository
 -   Open a terminal and go to the directory where you downloaded the project
 -   Install the required modules by running `npm install`
--   Start the application by running `npm start` and go to [](http://localhost:3000)
+-   Start the application by running `npm start` and go to [local host port 3000](http://localhost:3000)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
