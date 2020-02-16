@@ -12,7 +12,7 @@ const ShowBooks = (props) => {
                 <li key={book.id}>
                   <div className="book">
                     <div className="book-top">
-                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${'imageLinks' in book ? book.imageLinks.thumbnail : 'nopreview.png'}")`}}></div>
+                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${'imageLinks' in book ? book.imageLinks.thumbnail : 'nopreview.png'}")`, backgroundSize: 'contain'}}></div>
                       <div className="book-shelf-changer">
                         <select defaultValue={'shelf' in book ? book.shelf : 'none'} onChange={(event) => moveBook(event, book)}>
                           <option value="move" disabled>Move to...</option>
