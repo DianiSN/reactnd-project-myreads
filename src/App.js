@@ -11,12 +11,10 @@ const BooksApp = () => {
   const [currentlyReading, setCurrentlyReading] = useState([])
   const [wantToRead, setWantToRead] = useState([])
   const [read, setRead] = useState([])
-  const [booksOnShelf, setBooksOnShelf] = useState([])
 
   useEffect(() => {
     // Update the document title using the browser API
     BooksAPI.getAll().then((books) => {
-      setBooksOnShelf(books)
       setCurrentlyReading(
         filterToShelf(books, 'currentlyReading')
       )
@@ -89,7 +87,7 @@ const BooksApp = () => {
           </div>
         </div>
       )}/>
-    <Route exact path="/search" render={({ history }) => (<Search booksOnShelf={booksOnShelf} moveBook={(event, book) => {
+    <Route exact path="/search" render={({ history }) => (<Search booksOnShelf={[...currentlyReading, ...wantToRead, ...read]} moveBook={(event, book) => {
       moveBook(event, book)
       history.push('/')
     }}/>)}/>
